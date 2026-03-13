@@ -223,6 +223,55 @@
     .book-author { font-size: .8rem; color: var(--muted); margin-bottom: .4rem; }
     .book-note { font-size: .82rem; color: var(--muted); }
 
+    /* ── INSTITUTION CARDS ── */
+    .inst-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 1.2rem; }
+    .inst-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 1.4rem;
+      display: flex; flex-direction: column; gap: .9rem;
+      transition: transform .2s, border-color .2s, box-shadow .2s;
+    }
+    .inst-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--green);
+      box-shadow: 0 8px 32px rgba(52,211,153,.12);
+    }
+    .inst-top { display: flex; align-items: center; gap: .9rem; }
+    .inst-logo {
+      width: 46px; height: 46px; border-radius: 10px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; font-weight: 800;
+    }
+    .i1 { background: linear-gradient(135deg,#6c8dfa,#a78bfa); }
+    .i2 { background: linear-gradient(135deg,#f87171,#fbbf24); }
+    .i3 { background: linear-gradient(135deg,#34d399,#6c8dfa); }
+    .i4 { background: linear-gradient(135deg,#a78bfa,#f43f5e); }
+    .i5 { background: linear-gradient(135deg,#fbbf24,#34d399); }
+    .i6 { background: linear-gradient(135deg,#0ea5e9,#a78bfa); }
+    .i7 { background: linear-gradient(135deg,#f43f5e,#6c8dfa); }
+    .i8 { background: linear-gradient(135deg,#10b981,#0ea5e9); }
+    .i9 { background: linear-gradient(135deg,#8b5cf6,#fbbf24); }
+    .inst-name { font-size: 1rem; font-weight: 700; }
+    .inst-type {
+      display: inline-block; font-size: .72rem; font-weight: 600;
+      padding: .15rem .55rem; border-radius: 6px; margin-top: .2rem;
+    }
+    .type-vc   { background: rgba(108,141,250,.15); color: var(--accent); }
+    .type-val  { background: rgba(52,211,153,.15);  color: var(--green); }
+    .type-macro{ background: rgba(251,191,36,.15);  color: var(--yellow); }
+    .type-pe   { background: rgba(248,113,113,.15); color: var(--red); }
+    .type-tool { background: rgba(167,139,250,.15); color: var(--accent2); }
+    .inst-desc { font-size: .84rem; color: var(--muted); line-height: 1.65; }
+    .inst-links { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: auto; }
+    .inst-link {
+      display: inline-flex; align-items: center; gap: .3rem;
+      padding: .25rem .75rem; border-radius: 999px;
+      font-size: .76rem; font-weight: 600; text-decoration: none;
+      border: 1px solid var(--border); color: var(--muted);
+      transition: border-color .2s, color .2s;
+    }
+    .inst-link:hover { border-color: var(--green); color: var(--green); }
+
     /* ── DIVIDER ── */
     .divider { height: 1px; background: var(--border); max-width: 960px; margin: 0 auto; }
 
@@ -247,6 +296,7 @@
   <div class="nav-links">
     <a href="#invest" class="active">投资理财</a>
     <a href="#guru">大咖追踪</a>
+    <a href="#inst">机构追踪</a>
   </div>
 </nav>
 
@@ -654,6 +704,172 @@
         <span class="guru-link blog">📄 价值投资通讯</span>
       </div>
     </a>
+
+  </div>
+
+</section>
+
+<div class="divider"></div>
+
+<!-- ── 机构追踪 ── -->
+<section id="inst">
+
+  <div class="section-header">
+    <div class="section-icon">🏛️</div>
+    <div>
+      <h2>机构追踪</h2>
+      <span>顶尖投资机构的思想输出 · 研究报告 · 持仓动向</span>
+    </div>
+  </div>
+
+  <!-- 分类说明 -->
+  <div style="display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.8rem">
+    <span class="inst-type type-vc" style="font-size:.8rem;padding:.3rem .8rem">🚀 风险投资 / VC</span>
+    <span class="inst-type type-val" style="font-size:.8rem;padding:.3rem .8rem">💎 价值投资</span>
+    <span class="inst-type type-macro" style="font-size:.8rem;padding:.3rem .8rem">🌐 宏观对冲</span>
+    <span class="inst-type type-pe" style="font-size:.8rem;padding:.3rem .8rem">🏦 私募 / PE</span>
+    <span class="inst-type type-tool" style="font-size:.8rem;padding:.3rem .8rem">🛠️ 追踪工具</span>
+  </div>
+
+  <div class="inst-grid">
+
+    <!-- a16z -->
+    <div class="inst-card">
+      <div class="inst-top">
+        <div class="inst-logo i1">a16z</div>
+        <div>
+          <div class="inst-name">Andreessen Horowitz</div>
+          <span class="inst-type type-vc">🚀 风险投资</span>
+        </div>
+      </div>
+      <div class="inst-desc">硅谷最具影响力的 VC 之一。旗下 Future、a16z Crypto 等子站持续输出 AI、Web3、生物科技等前沿深度文章，是读懂科技投资逻辑的最佳入口。</div>
+      <div class="inst-links">
+        <a class="inst-link" href="https://a16z.com/news-content/" target="_blank" rel="noopener">📄 研究文章</a>
+        <a class="inst-link" href="https://x.com/a16z" target="_blank" rel="noopener">𝕏 @a16z</a>
+      </div>
+    </div>
+
+    <!-- 红杉资本 -->
+    <div class="inst-card">
+      <div class="inst-top">
+        <div class="inst-logo i2">SEQ</div>
+        <div>
+          <div class="inst-name">Sequoia Capital</div>
+          <span class="inst-type type-vc">🚀 风险投资</span>
+        </div>
+      </div>
+      <div class="inst-desc">苹果、谷歌、Stripe 等传奇公司的早期投资人。官网定期发布创业洞察与投资备忘，2022 年那篇《适应的时候到了》曾引发全球创投圈震动。</div>
+      <div class="inst-links">
+        <a class="inst-link" href="https://www.sequoiacap.com/our-thinking/" target="_blank" rel="noopener">📄 深度洞察</a>
+        <a class="inst-link" href="https://x.com/sequoia" target="_blank" rel="noopener">𝕏 @sequoia</a>
+      </div>
+    </div>
+
+    <!-- 伯克希尔哈撒韦 -->
+    <div class="inst-card">
+      <div class="inst-top">
+        <div class="inst-logo i3">BRK</div>
+        <div>
+          <div class="inst-name">Berkshire Hathaway</div>
+          <span class="inst-type type-val">💎 价值投资</span>
+        </div>
+      </div>
+      <div class="inst-desc">巴菲特掌舵的投资帝国。每年股东信与年会是全球投资者的年度盛事。13F 持仓报告每季度公开披露，可直接查看其最新买卖动向。</div>
+      <div class="inst-links">
+        <a class="inst-link" href="https://www.berkshirehathaway.com/letters/letters.html" target="_blank" rel="noopener">📄 历年股东信</a>
+        <a class="inst-link" href="https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001067983&type=13F&dateb=&owner=include&count=10" target="_blank" rel="noopener">📊 13F 持仓</a>
+      </div>
+    </div>
+
+    <!-- 桥水基金 -->
+    <div class="inst-card">
+      <div class="inst-top">
+        <div class="inst-logo i4">BW</div>
+        <div>
+          <div class="inst-name">Bridgewater Associates</div>
+          <span class="inst-type type-macro">🌐 宏观对冲</span>
+        </div>
+      </div>
+      <div class="inst-desc">全球规模最大的对冲基金，达利欧创立。"全天候策略"与"债务危机模板"影响深远。官网定期公开宏观研究报告，值得长期跟踪。</div>
+      <div class="inst-links">
+        <a class="inst-link" href="https://www.bridgewater.com/research-and-insights/" target="_blank" rel="noopener">📄 宏观研究</a>
+      </div>
+    </div>
+
+    <!-- 橡树资本 -->
+    <div class="inst-card">
+      <div class="inst-top">
+        <div class="inst-logo i5">OAK</div>
+        <div>
+          <div class="inst-name">Oaktree Capital</div>
+          <span class="inst-type type-val">💎 价值投资</span>
+        </div>
+      </div>
+      <div class="inst-desc">专注不良资产与信用投资的顶级机构，霍华德·马克斯主导。旗下 Insights 专栏的 Memo 系列是洞察市场周期与风险定价的经典读物。</div>
+      <div class="inst-links">
+        <a class="inst-link" href="https://www.oaktreecapital.com/insights" target="_blank" rel="noopener">📄 Memos</a>
+      </div>
+    </div>
+
+    <!-- 高瓴资本 -->
+    <div class="inst-card">
+      <div class="inst-top">
+        <div class="inst-logo i6">HLC</div>
+        <div>
+          <div class="inst-name">高瓴资本 Hillhouse</div>
+          <span class="inst-type type-pe">🏦 私募 / PE</span>
+        </div>
+      </div>
+      <div class="inst-desc">亚洲规模最大的投资机构之一，张磊创立。投资横跨 VC、PE、二级市场，腾讯、京东、百济神州等均为其代表项目。官网发布部分研究观点。</div>
+      <div class="inst-links">
+        <a class="inst-link" href="https://www.hillhousecap.com/research" target="_blank" rel="noopener">📄 研究观点</a>
+      </div>
+    </div>
+
+    <!-- Baillie Gifford -->
+    <div class="inst-card">
+      <div class="inst-top">
+        <div class="inst-logo i7">BG</div>
+        <div>
+          <div class="inst-name">Baillie Gifford</div>
+          <span class="inst-type type-val">💎 价值投资</span>
+        </div>
+      </div>
+      <div class="inst-desc">苏格兰百年资管，特斯拉最大外部股东之一。以"耐心资本"著称，持股周期动辄十年以上。官网有大量关于长期主义投资哲学的深度文章。</div>
+      <div class="inst-links">
+        <a class="inst-link" href="https://www.bailliegifford.com/en/uk/individual-investors/insights/" target="_blank" rel="noopener">📄 长期投资洞见</a>
+      </div>
+    </div>
+
+    <!-- WhaleWisdom 持仓追踪 -->
+    <div class="inst-card">
+      <div class="inst-top">
+        <div class="inst-logo i8">🐋</div>
+        <div>
+          <div class="inst-name">WhaleWisdom</div>
+          <span class="inst-type type-tool">🛠️ 追踪工具</span>
+        </div>
+      </div>
+      <div class="inst-desc">聚合美国 SEC 13F 持仓披露数据，可一键查看任意机构的最新持仓、增减仓情况。想知道巴菲特或某对冲基金最近买了什么，这里一目了然。</div>
+      <div class="inst-links">
+        <a class="inst-link" href="https://whalewisdom.com" target="_blank" rel="noopener">🔍 查持仓</a>
+      </div>
+    </div>
+
+    <!-- GuruFocus -->
+    <div class="inst-card">
+      <div class="inst-top">
+        <div class="inst-logo i9">📡</div>
+        <div>
+          <div class="inst-name">GuruFocus</div>
+          <span class="inst-type type-tool">🛠️ 追踪工具</span>
+        </div>
+      </div>
+      <div class="inst-desc">专为价值投资者设计的数据平台，追踪全球 900+ 位顶尖基金经理的持仓变化，并整合财务指标、估值模型、护城河分析，是散户跟踪机构动向的利器。</div>
+      <div class="inst-links">
+        <a class="inst-link" href="https://www.gurufocus.com/guru/list" target="_blank" rel="noopener">🔍 大师持仓</a>
+      </div>
+    </div>
 
   </div>
 
