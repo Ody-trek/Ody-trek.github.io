@@ -261,6 +261,7 @@
     .type-macro{ background: rgba(251,191,36,.15);  color: var(--yellow); }
     .type-pe   { background: rgba(248,113,113,.15); color: var(--red); }
     .type-tool { background: rgba(167,139,250,.15); color: var(--accent2); }
+    .type-news { background: rgba(14,165,233,.15);  color: #38bdf8; }
     .inst-desc { font-size: .84rem; color: var(--muted); line-height: 1.65; }
     .inst-links { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: auto; }
     .inst-link {
@@ -729,6 +730,7 @@
     <span class="inst-type type-macro" style="font-size:.8rem;padding:.3rem .8rem">🌐 宏观对冲</span>
     <span class="inst-type type-pe" style="font-size:.8rem;padding:.3rem .8rem">🏦 私募 / PE</span>
     <span class="inst-type type-tool" style="font-size:.8rem;padding:.3rem .8rem">🛠️ 追踪工具</span>
+    <span class="inst-type type-news" style="font-size:.8rem;padding:.3rem .8rem">📰 新闻资讯</span>
   </div>
 
   <div class="inst-grid">
@@ -742,9 +744,10 @@
           <span class="inst-type type-vc">🚀 风险投资</span>
         </div>
       </div>
-      <div class="inst-desc">硅谷最具影响力的 VC 之一。旗下 Future、a16z Crypto 等子站持续输出 AI、Web3、生物科技等前沿深度文章，是读懂科技投资逻辑的最佳入口。</div>
+      <div class="inst-desc">硅谷最具影响力的 VC 之一，投资了 Airbnb、Stripe、OpenAI 等。旗下 Future 等子站持续输出 AI、Web3、生物科技前沿深度文章；Portfolio 页面可查所有被投公司。</div>
       <div class="inst-links">
         <a class="inst-link" href="https://a16z.com/news-content/" target="_blank" rel="noopener">📄 研究文章</a>
+        <a class="inst-link" href="https://a16z.com/portfolio/" target="_blank" rel="noopener">🗂️ 被投组合</a>
         <a class="inst-link" href="https://x.com/a16z" target="_blank" rel="noopener">𝕏 @a16z</a>
       </div>
     </div>
@@ -758,9 +761,10 @@
           <span class="inst-type type-vc">🚀 风险投资</span>
         </div>
       </div>
-      <div class="inst-desc">苹果、谷歌、Stripe 等传奇公司的早期投资人。官网定期发布创业洞察与投资备忘，2022 年那篇《适应的时候到了》曾引发全球创投圈震动。</div>
+      <div class="inst-desc">苹果、谷歌、Stripe、字节跳动等传奇公司的早期投资人。官网定期发布创业洞察，2022 年那篇《适应的时候到了》曾引发全球创投圈震动；Companies 页可查全部被投企业。</div>
       <div class="inst-links">
         <a class="inst-link" href="https://www.sequoiacap.com/our-thinking/" target="_blank" rel="noopener">📄 深度洞察</a>
+        <a class="inst-link" href="https://www.sequoiacap.com/companies/" target="_blank" rel="noopener">🗂️ 被投组合</a>
         <a class="inst-link" href="https://x.com/sequoia" target="_blank" rel="noopener">𝕏 @sequoia</a>
       </div>
     </div>
@@ -868,6 +872,38 @@
       <div class="inst-desc">专为价值投资者设计的数据平台，追踪全球 900+ 位顶尖基金经理的持仓变化，并整合财务指标、估值模型、护城河分析，是散户跟踪机构动向的利器。</div>
       <div class="inst-links">
         <a class="inst-link" href="https://www.gurufocus.com/guru/list" target="_blank" rel="noopener">🔍 大师持仓</a>
+      </div>
+    </div>
+
+    <!-- Crunchbase -->
+    <div class="inst-card">
+      <div class="inst-top">
+        <div class="inst-logo i1" style="font-size:.85rem">CB</div>
+        <div>
+          <div class="inst-name">Crunchbase</div>
+          <span class="inst-type type-tool">🛠️ 追踪工具</span>
+        </div>
+      </div>
+      <div class="inst-desc">全球最权威的创业公司与融资事件数据库。可按机构名搜索，实时查看 a16z、红杉等 VC 的最新投资轮次、被投公司、投资金额，是追踪 VC 动向的第一入口。</div>
+      <div class="inst-links">
+        <a class="inst-link" href="https://www.crunchbase.com/organization/andreessen-horowitz/recent_investments" target="_blank" rel="noopener">🔍 a16z 最新投资</a>
+        <a class="inst-link" href="https://www.crunchbase.com/organization/sequoia-capital/recent_investments" target="_blank" rel="noopener">🔍 红杉最新投资</a>
+      </div>
+    </div>
+
+    <!-- TechCrunch -->
+    <div class="inst-card">
+      <div class="inst-top">
+        <div class="inst-logo i2" style="font-size:.85rem">TC</div>
+        <div>
+          <div class="inst-name">TechCrunch</div>
+          <span class="inst-type type-news">📰 新闻资讯</span>
+        </div>
+      </div>
+      <div class="inst-desc">科技与创投领域最具影响力的媒体之一。重大融资轮次、收购事件、独角兽动态几乎都会第一时间报道，是了解全球 VC 投资最新动向最直接的新闻来源。</div>
+      <div class="inst-links">
+        <a class="inst-link" href="https://techcrunch.com/category/venture/" target="_blank" rel="noopener">📰 VC 融资快讯</a>
+        <a class="inst-link" href="https://x.com/TechCrunch" target="_blank" rel="noopener">𝕏 @TechCrunch</a>
       </div>
     </div>
 
