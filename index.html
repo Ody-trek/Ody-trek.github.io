@@ -144,6 +144,57 @@
     .badge.mid { background: rgba(251,191,36,.12); color: var(--yellow); }
     .badge.high { background: rgba(248,113,113,.12); color: var(--red); }
 
+    /* ── GURU CARDS ── */
+    .guru-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.2rem; }
+    .guru-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 1.4rem;
+      display: flex; flex-direction: column; gap: .8rem;
+      transition: transform .2s, border-color .2s, box-shadow .2s;
+      text-decoration: none; color: inherit;
+    }
+    .guru-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent2);
+      box-shadow: 0 8px 32px rgba(167,139,250,.15);
+    }
+    .guru-top { display: flex; align-items: center; gap: .9rem; }
+    .guru-avatar {
+      width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; font-weight: 700;
+    }
+    .ga { background: linear-gradient(135deg,#6c8dfa,#a78bfa); }
+    .gb { background: linear-gradient(135deg,#34d399,#6c8dfa); }
+    .gc { background: linear-gradient(135deg,#fbbf24,#f87171); }
+    .gd { background: linear-gradient(135deg,#a78bfa,#f87171); }
+    .ge { background: linear-gradient(135deg,#f87171,#fbbf24); }
+    .gf { background: linear-gradient(135deg,#34d399,#a78bfa); }
+    .guru-name { font-size: 1rem; font-weight: 700; }
+    .guru-title { font-size: .78rem; color: var(--muted); }
+    .guru-desc { font-size: .84rem; color: var(--muted); line-height: 1.6; }
+    .guru-links { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: auto; }
+    .guru-link {
+      display: inline-flex; align-items: center; gap: .3rem;
+      padding: .25rem .75rem; border-radius: 999px;
+      font-size: .76rem; font-weight: 600; text-decoration: none;
+      border: 1px solid var(--border);
+      transition: border-color .2s, color .2s;
+    }
+    .guru-link:hover { border-color: var(--accent2); color: var(--accent2); }
+    .guru-link.x { color: #e2e8f0; }
+    .guru-link.blog { color: var(--accent); }
+
+    /* ── MISTAKE CARDS ── */
+    .mistake-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 1rem; }
+    .mistake-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-left: 3px solid var(--red);
+      border-radius: 0 12px 12px 0; padding: 1.2rem 1.4rem;
+    }
+    .mistake-card h4 { font-size: .92rem; font-weight: 700; margin-bottom: .4rem; color: var(--red); }
+    .mistake-card p { font-size: .84rem; color: var(--muted); }
+
     /* ── BOOK LIST ── */
     .booklist { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
     .book {
@@ -189,6 +240,7 @@
   <div class="nav-logo">Kevin's Space</div>
   <div class="nav-links">
     <a href="#invest" class="active">投资理财</a>
+    <a href="#guru">大咖追踪</a>
   </div>
 </nav>
 
@@ -213,7 +265,7 @@
     <div class="section-icon">📈</div>
     <div>
       <h2>投资理财</h2>
-      <span>我的投资框架 · 资产配置思路 · 书单</span>
+      <span>我的投资框架 · 资产配置思路 · 常见误区 · 书单 · 大咖追踪</span>
     </div>
   </div>
 
@@ -267,6 +319,20 @@
       <div>
         <h4>成本是可以控制的唯一变量</h4>
         <p>未来收益不可预测，但手续费、税费、换手成本是实实在在的损耗，尽量压低。</p>
+      </div>
+    </div>
+    <div class="principle">
+      <div class="principle-num">05</div>
+      <div>
+        <h4>分散但不过度分散</h4>
+        <p>持有 10–20 只个股或几只不相关资产类别已足够分散风险；超过 40 只则难以深度研究，收益趋向平庸。</p>
+      </div>
+    </div>
+    <div class="principle">
+      <div class="principle-num">06</div>
+      <div>
+        <h4>把复利当成朋友，别中途打断它</h4>
+        <p>频繁赎回、频繁止盈会打断复利曲线。10 万元在 8% 年化下，20 年后是 46 万，30 年后是 100 万——时间才是最大的杠杆。</p>
       </div>
     </div>
   </div>
@@ -333,6 +399,37 @@
     </table>
   </div>
 
+  <!-- 常见误区 -->
+  <div class="section-header" style="margin-bottom:1.2rem">
+    <h2 style="font-size:1.1rem;color:var(--muted)">新手常见误区</h2>
+  </div>
+  <div class="mistake-grid" style="margin-bottom:2.5rem">
+    <div class="mistake-card">
+      <h4>追涨杀跌</h4>
+      <p>大涨后兴奋入场，大跌后恐慌割肉，结果总是"高买低卖"，是散户亏损的最大来源。</p>
+    </div>
+    <div class="mistake-card">
+      <h4>把"熟悉"当"了解"</h4>
+      <p>因为用过某公司的产品就买其股票，忽视了估值、财务、竞争格局等核心因素。</p>
+    </div>
+    <div class="mistake-card">
+      <h4>过度关注短期涨跌</h4>
+      <p>每天盯盘、每周检视收益，放大了心理波动，也更容易做出冲动决策。</p>
+    </div>
+    <div class="mistake-card">
+      <h4>忽视通货膨胀</h4>
+      <p>只存银行定期看似"保本"，实则购买力在悄悄缩水。跑赢通胀才是投资的最低门槛。</p>
+    </div>
+    <div class="mistake-card">
+      <h4>轻信"内幕消息"</h4>
+      <p>真正的内幕消息轮不到散户，听到的往往是被人利用的"出货工具"。</p>
+    </div>
+    <div class="mistake-card">
+      <h4>把杠杆当捷径</h4>
+      <p>杠杆放大收益的同时也放大亏损，强制平仓往往发生在最底部，让人永久出局。</p>
+    </div>
+  </div>
+
   <!-- 推荐书单 -->
   <div class="section-header" style="margin-bottom:1.2rem">
     <h2 style="font-size:1.1rem;color:var(--muted)">推荐书单</h2>
@@ -370,6 +467,104 @@
         <div class="book-note">随机漫步假说经典，重新审视"选股"与市场有效性的关系。</div>
       </div>
     </div>
+  </div>
+
+  <!-- 大咖追踪 -->
+  <div class="divider" style="margin: 2.5rem 0"></div>
+  <div class="section-header" id="guru">
+    <div class="section-icon">🌟</div>
+    <div>
+      <h2>大咖追踪</h2>
+      <span>顶尖投资人的公开账号与思想来源，持续关注</span>
+    </div>
+  </div>
+
+  <div class="guru-grid">
+
+    <a class="guru-card" href="https://www.berkshirehathaway.com/letters/letters.html" target="_blank" rel="noopener">
+      <div class="guru-top">
+        <div class="guru-avatar ga">🏦</div>
+        <div>
+          <div class="guru-name">Warren Buffett</div>
+          <div class="guru-title">沃伦·巴菲特 · 伯克希尔·哈撒韦</div>
+        </div>
+      </div>
+      <div class="guru-desc">价值投资的活化石。每年致股东信是全球投资者必读，语言平实却洞见深刻，几十年如一日。</div>
+      <div class="guru-links">
+        <span class="guru-link blog">📄 年度股东信</span>
+      </div>
+    </a>
+
+    <a class="guru-card" href="https://x.com/RayDalio" target="_blank" rel="noopener">
+      <div class="guru-top">
+        <div class="guru-avatar gb">🌊</div>
+        <div>
+          <div class="guru-name">Ray Dalio</div>
+          <div class="guru-title">瑞·达利欧 · 桥水基金创始人</div>
+        </div>
+      </div>
+      <div class="guru-desc">全天候策略与原则管理的倡导者。X 上频繁分享宏观经济观点，对债务周期与全球格局的分析独树一帜。</div>
+      <div class="guru-links">
+        <span class="guru-link x">𝕏 @RayDalio</span>
+      </div>
+    </a>
+
+    <a class="guru-card" href="https://x.com/BillAckman" target="_blank" rel="noopener">
+      <div class="guru-top">
+        <div class="guru-avatar gc">⚡</div>
+        <div>
+          <div class="guru-name">Bill Ackman</div>
+          <div class="guru-title">比尔·阿克曼 · Pershing Square</div>
+        </div>
+      </div>
+      <div class="guru-desc">激进投资者代表，擅长集中押注并公开发声。X 上极为活跃，投资观点与宏观看法兼具，言辞犀利。</div>
+      <div class="guru-links">
+        <span class="guru-link x">𝕏 @BillAckman</span>
+      </div>
+    </a>
+
+    <a class="guru-card" href="https://www.oaktreecapital.com/insights" target="_blank" rel="noopener">
+      <div class="guru-top">
+        <div class="guru-avatar gd">🌳</div>
+        <div>
+          <div class="guru-name">Howard Marks</div>
+          <div class="guru-title">霍华德·马克斯 · 橡树资本</div>
+        </div>
+      </div>
+      <div class="guru-desc">投资备忘录写作者中的顶尖高手。定期发布 Memo，专注市场周期、风险与投资心理，是难得的清醒之声。</div>
+      <div class="guru-links">
+        <span class="guru-link blog">📄 Oaktree Memos</span>
+      </div>
+    </a>
+
+    <a class="guru-card" href="https://x.com/CathieDWood" target="_blank" rel="noopener">
+      <div class="guru-top">
+        <div class="guru-avatar ge">🚀</div>
+        <div>
+          <div class="guru-name">Cathie Wood</div>
+          <div class="guru-title">凯西·伍德 · ARK Invest</div>
+        </div>
+      </div>
+      <div class="guru-desc">颠覆式创新投资的旗手。重仓 AI、基因、区块链等未来科技，观点激进，适合了解科技投资逻辑的另一面。</div>
+      <div class="guru-links">
+        <span class="guru-link x">𝕏 @CathieDWood</span>
+      </div>
+    </a>
+
+    <a class="guru-card" href="https://x.com/duan_yongping" target="_blank" rel="noopener">
+      <div class="guru-top">
+        <div class="guru-avatar gf">🐂</div>
+        <div>
+          <div class="guru-name">段永平</div>
+          <div class="guru-title">步步高创始人 · 价值投资者</div>
+        </div>
+      </div>
+      <div class="guru-desc">中国最知名的巴菲特信徒之一，早年重仓网易、苹果获百倍回报。X 上时常分享朴素的投资与人生感悟。</div>
+      <div class="guru-links">
+        <span class="guru-link x">𝕏 @duan_yongping</span>
+      </div>
+    </a>
+
   </div>
 
 </section>
