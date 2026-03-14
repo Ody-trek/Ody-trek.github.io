@@ -176,6 +176,7 @@
     .gj { background: linear-gradient(135deg,#8b5cf6,#ec4899); }
     .gk { background: linear-gradient(135deg,#f97316,#6c8dfa); }
     .gl { background: linear-gradient(135deg,#06b6d4,#34d399); }
+    .gm { background: linear-gradient(135deg,#1e293b,#6c8dfa); }
     .guru-name { font-size: 1rem; font-weight: 700; }
     .guru-title { font-size: .78rem; color: var(--muted); }
     .guru-desc { font-size: .84rem; color: var(--muted); line-height: 1.6; }
@@ -251,6 +252,7 @@
     .i7 { background: linear-gradient(135deg,#f43f5e,#6c8dfa); }
     .i8 { background: linear-gradient(135deg,#10b981,#0ea5e9); }
     .i9 { background: linear-gradient(135deg,#8b5cf6,#fbbf24); }
+    .i10 { background: linear-gradient(135deg,#1e293b,#475569); }
     .inst-name { font-size: 1rem; font-weight: 700; }
     .inst-type {
       display: inline-block; font-size: .72rem; font-weight: 600;
@@ -262,6 +264,7 @@
     .type-pe   { background: rgba(248,113,113,.15); color: var(--red); }
     .type-tool { background: rgba(167,139,250,.15); color: var(--accent2); }
     .type-news { background: rgba(14,165,233,.15);  color: #38bdf8; }
+    .type-am   { background: rgba(71,85,105,.25);   color: #94a3b8; }
     .inst-desc { font-size: .84rem; color: var(--muted); line-height: 1.65; }
     .inst-links { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: auto; }
     .inst-link {
@@ -692,6 +695,20 @@
       </div>
     </a>
 
+    <a class="guru-card" href="https://www.blackrock.com/corporate/investor-relations/larry-fink-ceo-letter" target="_blank" rel="noopener">
+      <div class="guru-top">
+        <div class="guru-avatar gm">🖤</div>
+        <div>
+          <div class="guru-name">Larry Fink</div>
+          <div class="guru-title">拉里·芬克 · BlackRock CEO</div>
+        </div>
+      </div>
+      <div class="guru-desc">全球最大资管机构 BlackRock（管理规模逾10万亿美元）掌门人。每年致CEO公开信是企业界的必读文件——从气候风险、ESG 到长期资本主义，几乎每封信都能引发全球企业重新审视自身战略方向。</div>
+      <div class="guru-links">
+        <span class="guru-link blog">📄 历年致CEO信</span>
+      </div>
+    </a>
+
     <a class="guru-card" href="https://www.grahamanddoddsville.net" target="_blank" rel="noopener">
       <div class="guru-top">
         <div class="guru-avatar gl">🏫</div>
@@ -731,6 +748,7 @@
     <span class="inst-type type-pe" style="font-size:.8rem;padding:.3rem .8rem">🏦 私募 / PE</span>
     <span class="inst-type type-tool" style="font-size:.8rem;padding:.3rem .8rem">🛠️ 追踪工具</span>
     <span class="inst-type type-news" style="font-size:.8rem;padding:.3rem .8rem">📰 新闻资讯</span>
+    <span class="inst-type type-am"   style="font-size:.8rem;padding:.3rem .8rem">🏢 资产管理</span>
   </div>
 
   <div class="inst-grid">
@@ -888,6 +906,22 @@
       <div class="inst-links">
         <a class="inst-link" href="https://www.crunchbase.com/organization/andreessen-horowitz/recent_investments" target="_blank" rel="noopener">🔍 a16z 最新投资</a>
         <a class="inst-link" href="https://www.crunchbase.com/organization/sequoia-capital/recent_investments" target="_blank" rel="noopener">🔍 红杉最新投资</a>
+      </div>
+    </div>
+
+    <!-- BlackRock -->
+    <div class="inst-card">
+      <div class="inst-top">
+        <div class="inst-logo i10" style="font-size:.85rem">BLK</div>
+        <div>
+          <div class="inst-name">BlackRock</div>
+          <span class="inst-type type-am">🏢 资产管理</span>
+        </div>
+      </div>
+      <div class="inst-desc">全球最大资产管理公司，AUM 逾 10 万亿美元，几乎是所有标普500公司的股东。CEO 拉里·芬克每年致CEO公开信在企业界引发广泛讨论；官网的 Investment Institute 持续输出宏观与市场前瞻研究。</div>
+      <div class="inst-links">
+        <a class="inst-link" href="https://www.blackrock.com/corporate/investor-relations/larry-fink-ceo-letter" target="_blank" rel="noopener">📄 历年致CEO信</a>
+        <a class="inst-link" href="https://www.blackrock.com/us/individual/insights/blackrock-investment-institute" target="_blank" rel="noopener">📊 Investment Institute</a>
       </div>
     </div>
 
