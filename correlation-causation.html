@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>相关性 vs 因果性 · Kevin's Space</title>
+  <style>
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --card: #22263a;
+      --accent: #6c8dfa;
+      --accent2: #a78bfa;
+      --text: #e2e8f0;
+      --muted: #8892a4;
+      --border: #2e3347;
+      --green: #34d399;
+      --red: #f87171;
+      --yellow: #fbbf24;
+      --orange: #fb923c;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      line-height: 1.75;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(15,17,23,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px;
+    }
+    .nav-logo {
+      font-size: 1.1rem; font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      text-decoration: none;
+    }
+    .nav-back {
+      color: var(--muted); text-decoration: none; font-size: .88rem;
+      transition: color .2s;
+    }
+    .nav-back:hover { color: var(--text); }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: center;
+      padding: 5rem 2rem 3.5rem;
+      background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(108,141,250,0.13), transparent);
+    }
+    .hero-label {
+      display: inline-block; margin-bottom: 1rem;
+      font-size: .78rem; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--accent);
+      background: rgba(108,141,250,.1);
+      padding: .3rem 1rem; border-radius: 999px;
+      border: 1px solid rgba(108,141,250,.2);
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800; letter-spacing: -1px;
+      background: linear-gradient(135deg, #fff 0%, var(--accent2) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+    }
+    .hero p { color: var(--muted); max-width: 560px; margin: 0 auto; font-size: 1.05rem; }
+
+    /* ── LAYOUT ── */
+    .content { max-width: 900px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+
+    /* ── SECTION HEADER ── */
+    .sh {
+      display: flex; align-items: center; gap: .75rem;
+      margin: 3rem 0 1.5rem;
+    }
+    .sh-icon {
+      width: 38px; height: 38px; border-radius: 10px; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+    }
+    .sh h2 { font-size: 1.35rem; font-weight: 700; }
+    .sh span { color: var(--muted); font-size: .83rem; }
+
+    /* ── CARDS ── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+    @media (max-width: 620px) { .two-col { grid-template-columns: 1fr; } }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem;
+    }
+    .card-label {
+      font-size: .72rem; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; margin-bottom: .6rem;
+    }
+    .cl-blue  { color: var(--accent); }
+    .cl-purple{ color: var(--accent2); }
+    .cl-green { color: var(--green); }
+    .cl-red   { color: var(--red); }
+    .cl-yellow{ color: var(--yellow); }
+    .cl-orange{ color: var(--orange); }
+
+    .card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: .5rem; }
+    .card p  { color: var(--muted); font-size: .88rem; }
+
+    /* ── HIGHLIGHT BOX ── */
+    .hbox {
+      border-radius: 12px; padding: 1.3rem 1.5rem;
+      margin: 1.2rem 0;
+      border: 1px solid;
+    }
+    .hbox.blue   { background: rgba(108,141,250,.07); border-color: rgba(108,141,250,.25); }
+    .hbox.purple { background: rgba(167,139,250,.07); border-color: rgba(167,139,250,.25); }
+    .hbox.green  { background: rgba(52,211,153,.07);  border-color: rgba(52,211,153,.25); }
+    .hbox.red    { background: rgba(248,113,113,.07); border-color: rgba(248,113,113,.25); }
+    .hbox.yellow { background: rgba(251,191,36,.07);  border-color: rgba(251,191,36,.25); }
+    .hbox p { color: var(--muted); font-size: .9rem; }
+    .hbox strong { color: var(--text); }
+
+    /* ── STORY TIMELINE ── */
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+    .tl-item {
+      display: flex; gap: 1.2rem; padding-bottom: 1.8rem;
+      position: relative;
+    }
+    .tl-item:not(:last-child)::before {
+      content: '';
+      position: absolute; left: 19px; top: 40px;
+      width: 2px; bottom: 0;
+      background: var(--border);
+    }
+    .tl-dot {
+      width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; z-index: 1;
+    }
+    .tl-body h4 { font-size: .97rem; font-weight: 700; margin-bottom: .3rem; }
+    .tl-body p  { color: var(--muted); font-size: .86rem; }
+
+    /* ── SCATTER CHART (pure CSS) ── */
+    .chart-wrap {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 1.5rem;
+      margin: 1.2rem 0;
+    }
+    .chart-title { font-size: .88rem; font-weight: 700; margin-bottom: 1rem; color: var(--muted); }
+    .scatter {
+      position: relative;
+      width: 100%; padding-top: 56%;
+      background: linear-gradient(rgba(108,141,250,.03) 1px, transparent 1px),
+                  linear-gradient(90deg, rgba(108,141,250,.03) 1px, transparent 1px);
+      background-size: 20% 20%;
+      border-left: 2px solid var(--border);
+      border-bottom: 2px solid var(--border);
+      border-radius: 0 4px 0 0;
+    }
+    .dot {
+      position: absolute;
+      width: 10px; height: 10px; border-radius: 50%;
+      transform: translate(-50%, 50%);
+    }
+    .trend-line {
+      position: absolute;
+      height: 2px; transform-origin: left center;
+      opacity: .5;
+    }
+    .axis-label {
+      font-size: .72rem; color: var(--muted); text-align: center;
+      margin-top: .6rem;
+    }
+    .chart-note { font-size: .78rem; color: var(--muted); margin-top: .6rem; }
+
+    /* ── CONFOUNDER DIAGRAM ── */
+    .dag {
+      display: flex; align-items: center; justify-content: center;
+      gap: 0; flex-wrap: wrap;
+      padding: 1.5rem;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; margin: 1.2rem 0;
+    }
+    .dag-node {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: .6rem 1.1rem;
+      font-size: .85rem; font-weight: 700; text-align: center;
+      min-width: 110px;
+    }
+    .dag-node.cause  { border-color: var(--accent);  color: var(--accent); }
+    .dag-node.effect { border-color: var(--red);     color: var(--red); }
+    .dag-node.conf   { border-color: var(--yellow);  color: var(--yellow); }
+    .dag-arrow {
+      font-size: 1.3rem; color: var(--muted);
+      padding: 0 .4rem;
+    }
+    .dag-col { display: flex; flex-direction: column; align-items: center; gap: .5rem; }
+    .dag-row { display: flex; align-items: center; justify-content: center; gap: .3rem; width: 100%; }
+
+    /* ── METHODS TABLE ── */
+    .table-wrap {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; overflow: hidden; margin: 1.2rem 0;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: .86rem; }
+    thead { background: rgba(108,141,250,.08); }
+    th { padding: .85rem 1.1rem; text-align: left; font-weight: 600;
+         color: var(--muted); font-size: .78rem; text-transform: uppercase; letter-spacing: .05em; }
+    td { padding: .85rem 1.1rem; border-top: 1px solid var(--border); color: var(--muted); }
+    td:first-child { color: var(--text); font-weight: 600; }
+    tr:hover td { background: rgba(255,255,255,.02); }
+
+    .badge {
+      display: inline-block; padding: .15rem .55rem;
+      border-radius: 6px; font-size: .76rem; font-weight: 600;
+    }
+    .badge.strong { background: rgba(52,211,153,.12);  color: var(--green); }
+    .badge.mid    { background: rgba(251,191,36,.12);  color: var(--yellow); }
+    .badge.weak   { background: rgba(248,113,113,.12); color: var(--red); }
+
+    /* ── EXAMPLES GRID ── */
+    .ex-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 1rem; }
+    .ex-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.2rem;
+    }
+    .ex-card .verdict {
+      display: inline-block; font-size: .72rem; font-weight: 700;
+      padding: .15rem .6rem; border-radius: 6px; margin-bottom: .6rem;
+      letter-spacing: .05em; text-transform: uppercase;
+    }
+    .v-trap  { background: rgba(248,113,113,.12); color: var(--red); }
+    .v-real  { background: rgba(52,211,153,.12);  color: var(--green); }
+    .v-conf  { background: rgba(251,191,36,.12);  color: var(--yellow); }
+    .ex-card h4 { font-size: .93rem; font-weight: 700; margin-bottom: .4rem; }
+    .ex-card p  { font-size: .83rem; color: var(--muted); }
+
+    /* ── TAKEAWAY ── */
+    .takeaway {
+      background: linear-gradient(135deg, rgba(108,141,250,.1), rgba(167,139,250,.1));
+      border: 1px solid rgba(108,141,250,.25);
+      border-radius: 16px; padding: 2rem;
+      margin-top: 2.5rem; text-align: center;
+    }
+    .takeaway h3 { font-size: 1.2rem; font-weight: 800; margin-bottom: .8rem; }
+    .takeaway p  { color: var(--muted); font-size: .92rem; max-width: 580px; margin: 0 auto; }
+
+    /* ── DIVIDER ── */
+    .divider { height: 1px; background: var(--border); margin: 2.5rem 0; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center; padding: 2.5rem;
+      color: var(--muted); font-size: .83rem;
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="index.html">Kevin's Space</a>
+  <a class="nav-back" href="index.html">← 返回首页</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-label">数据思维 · 统计基础</div>
+  <h1>相关性 ≠ 因果性</h1>
+  <p>用一个真实项目，彻底讲清楚这两个概念的联系、区别，以及如何从数据中识别真正的因果关系。</p>
+</div>
+
+<div class="content">
+
+  <!-- ── 项目背景 ── -->
+  <div class="sh">
+    <div class="sh-icon">🍦</div>
+    <div>
+      <h2>项目背景：冰淇淋与溺水</h2>
+      <span>一个让统计学家又爱又恨的经典数据集</span>
+    </div>
+  </div>
+
+  <div class="hbox blue">
+    <p>
+      研究人员收集了某海滨城市 <strong>10 年间每月的数据</strong>，发现一件奇怪的事：
+      <strong>冰淇淋月销售额</strong>与<strong>当月溺水人数</strong>之间存在强烈的正相关——
+      冰淇淋卖得越多的月份，溺水的人越多。<br><br>
+      相关系数 <strong>r ≈ 0.85</strong>，p 值远小于 0.01，统计上高度显著。
+    </p>
+  </div>
+
+  <!-- 散点图（CSS 模拟） -->
+  <div class="chart-wrap">
+    <div class="chart-title">冰淇淋月销售额 vs 当月溺水人数（模拟散点图）</div>
+    <div class="scatter" id="sc">
+      <!-- 趋势线 -->
+      <div class="trend-line" style="background:var(--accent);width:78%;left:11%;bottom:15%;transform:rotate(-28deg)"></div>
+      <!-- 散点 -->
+      <div class="dot" style="background:var(--accent);left:12%;bottom:10%"></div>
+      <div class="dot" style="background:var(--accent);left:18%;bottom:16%"></div>
+      <div class="dot" style="background:var(--accent);left:22%;bottom:13%"></div>
+      <div class="dot" style="background:var(--accent);left:28%;bottom:22%"></div>
+      <div class="dot" style="background:var(--accent);left:33%;bottom:26%"></div>
+      <div class="dot" style="background:var(--accent);left:38%;bottom:30%"></div>
+      <div class="dot" style="background:var(--accent);left:43%;bottom:28%"></div>
+      <div class="dot" style="background:var(--accent);left:50%;bottom:38%"></div>
+      <div class="dot" style="background:var(--accent);left:55%;bottom:42%"></div>
+      <div class="dot" style="background:var(--accent);left:60%;bottom:46%"></div>
+      <div class="dot" style="background:var(--accent);left:65%;bottom:50%"></div>
+      <div class="dot" style="background:var(--accent);left:70%;bottom:55%"></div>
+      <div class="dot" style="background:var(--accent);left:75%;bottom:53%"></div>
+      <div class="dot" style="background:var(--accent);left:80%;bottom:60%"></div>
+      <div class="dot" style="background:var(--accent);left:85%;bottom:65%"></div>
+    </div>
+    <div class="axis-label">→ 冰淇淋月销售额（万元）｜↑ 溺水人数（人）</div>
+    <div class="chart-note">⚠️ r = 0.85，统计显著——但这能说明什么？</div>
+  </div>
+
+  <div class="hbox red">
+    <p>
+      <strong>错误结论（陷阱）：</strong>"冰淇淋导致了溺水。应当限制夏季冰淇淋销售以减少溺水事故。"<br>
+      <strong>这是用相关性冒充因果性的典型案例。</strong>
+    </p>
+  </div>
+
+
+  <!-- ── 概念定义 ── -->
+  <div class="sh">
+    <div class="sh-icon">📐</div>
+    <div>
+      <h2>核心概念</h2>
+      <span>先把两个概念定义清楚</span>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-label cl-blue">相关性 Correlation</div>
+      <h3>两个变量"一起动"</h3>
+      <p>
+        当变量 A 增大时，变量 B 也倾向于增大（正相关）或减小（负相关）。
+        相关性只描述<strong>统计上的共变关系</strong>，不解释原因。
+        <br><br>
+        用相关系数 <strong>r</strong> 衡量，范围 [-1, 1]。
+        r 越接近 ±1，线性关系越强。
+      </p>
+    </div>
+    <div class="card">
+      <div class="card-label cl-purple">因果性 Causation</div>
+      <h3>A 的变化"引起"B 的变化</h3>
+      <p>
+        A 是 B 的原因：改变 A，B 就会相应改变；不改变 A，B 就不会（或不那么容易）改变。
+        因果性需要<strong>机制解释 + 排除替代解释</strong>才能成立。
+        <br><br>
+        因果关系一定带来相关，但相关不一定有因果。
+      </p>
+    </div>
+  </div>
+
+  <div class="hbox green">
+    <p>
+      <strong>一句话区分：</strong>相关性说的是"我们在数据里看到了什么"，因果性说的是"世界背后发生了什么"。
+      前者是<strong>观测</strong>，后者是<strong>解释</strong>。
+    </p>
+  </div>
+
+
+  <!-- ── 混淆变量 ── -->
+  <div class="sh">
+    <div class="sh-icon">🌡️</div>
+    <div>
+      <h2>真相：混淆变量（Confounders）</h2>
+      <span>揭开冰淇淋项目的谜底</span>
+    </div>
+  </div>
+
+  <p style="color:var(--muted);font-size:.92rem;margin-bottom:1.2rem">
+    冰淇淋销量和溺水人数之间并没有因果关系。它们都被同一个<strong>第三变量</strong>驱动——
+    <strong>气温（季节）</strong>。
+  </p>
+
+  <!-- DAG 图 -->
+  <div class="dag">
+    <div style="width:100%;display:flex;flex-direction:column;align-items:center;gap:1rem;">
+      <!-- 顶部：混淆变量 -->
+      <div class="dag-node conf">☀️ 夏季高温</div>
+      <!-- 箭头分叉 -->
+      <div style="display:flex;align-items:flex-start;gap:4rem;width:100%;justify-content:center;padding-top:.3rem;">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:.4rem;">
+          <span style="color:var(--muted);font-size:1.2rem">↙</span>
+          <div class="dag-node cause">🍦 冰淇淋销量 ↑</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:.4rem;">
+          <span style="color:var(--muted);font-size:1.2rem">↘</span>
+          <div class="dag-node effect">🏊 溺水人数 ↑</div>
+        </div>
+      </div>
+      <!-- 虚假相关箭头 -->
+      <div style="display:flex;align-items:center;gap:.5rem;margin-top:.3rem;">
+        <div class="dag-node cause" style="opacity:.5;font-size:.78rem;min-width:80px;padding:.4rem .7rem">冰淇淋</div>
+        <span style="color:var(--red);font-size:1.2rem">⟵⟶</span>
+        <div class="dag-node effect" style="opacity:.5;font-size:.78rem;min-width:80px;padding:.4rem .7rem">溺水</div>
+        <span style="color:var(--red);font-size:.78rem;font-weight:700;margin-left:.4rem">虚假相关</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hbox yellow">
+    <p>
+      <strong>混淆变量（Confounder）</strong>是同时影响原因变量和结果变量的第三方因素。
+      它会制造出"虚假相关"——两个变量看起来有关，其实各自只是混淆变量的<strong>下游结果</strong>，彼此之间没有直接影响。
+    </p>
+  </div>
+
+  <!-- 故事时间线 -->
+  <div class="timeline" style="margin-top:1.5rem">
+    <div class="tl-item">
+      <div class="tl-dot" style="background:rgba(108,141,250,.15);border:1px solid var(--accent)">📊</div>
+      <div class="tl-body">
+        <h4>第一步：发现相关</h4>
+        <p>数据分析师发现冰淇淋销量与溺水人数强烈正相关（r=0.85）。这是真实的统计现象，没有错。</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="background:rgba(248,113,113,.15);border:1px solid var(--red)">⚠️</div>
+      <div class="tl-body">
+        <h4>第二步：常见错误——直接推因果</h4>
+        <p>"冰淇淋→溺水"。跳过机制分析，直接用相关性得出政策建议，是最常见的因果推断谬误。</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="background:rgba(251,191,36,.15);border:1px solid var(--yellow)">🔍</div>
+      <div class="tl-body">
+        <h4>第三步：寻找混淆变量</h4>
+        <p>加入"月均气温"这一变量后重新分析：控制气温后，冰淇淋与溺水的偏相关系数接近 0，虚假相关消失。</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="background:rgba(52,211,153,.15);border:1px solid var(--green)">✅</div>
+      <div class="tl-body">
+        <h4>第四步：正确结论</h4>
+        <p>气温升高 → 人们更爱吃冰淇淋（正相关）；气温升高 → 游泳人数增加 → 溺水风险上升（正相关）。冰淇淋与溺水之间只有虚假相关，没有因果。</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ── 如何建立因果性 ── -->
+  <div class="sh">
+    <div class="sh-icon">🔬</div>
+    <div>
+      <h2>如何从数据中建立因果性</h2>
+      <span>四种主要方法，强弱有别</span>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>方法</th>
+          <th>原理</th>
+          <th>例子</th>
+          <th>因果强度</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>随机对照实验（RCT）</td>
+          <td>随机分组，消除所有混淆变量</td>
+          <td>药物临床试验：随机给一半人吃药，一半吃安慰剂</td>
+          <td><span class="badge strong">最强</span></td>
+        </tr>
+        <tr>
+          <td>自然实验</td>
+          <td>利用现实中的"准随机"事件代替人工随机</td>
+          <td>征兵抽签研究越战老兵的健康影响</td>
+          <td><span class="badge strong">强</span></td>
+        </tr>
+        <tr>
+          <td>双重差分（DID）</td>
+          <td>比较政策前后、处理组与对照组的变化差</td>
+          <td>最低工资法颁布前后，对比相邻两州就业率变化</td>
+          <td><span class="badge mid">中</span></td>
+        </tr>
+        <tr>
+          <td>控制变量回归</td>
+          <td>在统计模型中加入已知混淆变量</td>
+          <td>冰淇淋案例：加入"气温"后偏相关消失</td>
+          <td><span class="badge weak">弱（无法控制未知混淆）</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="hbox purple">
+    <p>
+      <strong>关键原则：</strong>随机化（Randomization）是建立因果的黄金标准，因为它能同时控制所有已知和<strong>未知</strong>的混淆变量。
+      观测数据的方法再精巧，也只能控制"你想到了的"混淆变量。
+    </p>
+  </div>
+
+
+  <!-- ── 更多例子 ── -->
+  <div class="sh">
+    <div class="sh-icon">🗂️</div>
+    <div>
+      <h2>更多经典案例</h2>
+      <span>相关 vs 因果的识别练习</span>
+    </div>
+  </div>
+
+  <div class="ex-grid">
+
+    <div class="ex-card">
+      <div class="verdict v-trap">虚假相关</div>
+      <h4>消防员人数 vs 火灾损失</h4>
+      <p>火灾越大派去的消防员越多，但不能说"消防员增加了损失"。火灾规模是混淆变量。</p>
+    </div>
+
+    <div class="ex-card">
+      <div class="verdict v-trap">虚假相关</div>
+      <h4>鞋码 vs 阅读能力（儿童）</h4>
+      <p>鞋码大的孩子读书能力更强？背后是"年龄"——年龄大则脚大，年龄大也读书更好。</p>
+    </div>
+
+    <div class="ex-card">
+      <div class="verdict v-conf">混淆陷阱</div>
+      <h4>名校毕业 vs 高薪</h4>
+      <p>名校生薪资高，但研究发现，控制"能力与家庭背景"后差距大幅缩小。部分是因为名校筛选了本就优秀的人。</p>
+    </div>
+
+    <div class="ex-card">
+      <div class="verdict v-conf">混淆陷阱</div>
+      <h4>医院入院率 vs 死亡率</h4>
+      <p>住院人的死亡率更高——因为病重的人才住院，"病情严重"是混淆变量。医院没有"导致"更高死亡率。</p>
+    </div>
+
+    <div class="ex-card">
+      <div class="verdict v-real">真实因果</div>
+      <h4>吸烟 vs 肺癌</h4>
+      <p>经过几十年 RCT 补充 + 生物机制研究，已确认因果：烟草中焦油和尼古丁直接损伤肺细胞 DNA。</p>
+    </div>
+
+    <div class="ex-card">
+      <div class="verdict v-real">真实因果</div>
+      <h4>运动 vs 心脏病风险</h4>
+      <p>多项 RCT 研究表明，规律有氧运动显著降低心脏病风险。机制清晰：改善血脂、降低血压、增强心肌。</p>
+    </div>
+
+  </div>
+
+
+  <!-- ── 联系与区别总结 ── -->
+  <div class="sh">
+    <div class="sh-icon">🗺️</div>
+    <div>
+      <h2>联系与区别一览</h2>
+    </div>
+  </div>
+
+  <div class="two-col" style="margin-bottom:1.2rem">
+    <div class="card">
+      <div class="card-label cl-green">联系</div>
+      <h3>因果一定带来相关</h3>
+      <p>如果 A 确实导致了 B，那么在数据中 A 和 B 几乎必然呈现相关性（除非效应被其他因素完全抵消）。
+      相关性是发现因果线索的第一步——没有相关性，通常不值得继续深挖因果。</p>
+    </div>
+    <div class="card">
+      <div class="card-label cl-red">区别</div>
+      <h3>相关不一定有因果</h3>
+      <p>相关性可由三种情形产生：① A→B（A导致B）；② B→A（反向因果）；③ C→A 且 C→B（混淆变量）。只有①才是我们想要的因果，②③都会制造虚假相关。</p>
+    </div>
+  </div>
+
+  <!-- 总结表格 -->
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>维度</th>
+          <th>相关性</th>
+          <th>因果性</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>问的问题</td>
+          <td>A 和 B 是否一起变化？</td>
+          <td>改变 A 会不会导致 B 改变？</td>
+        </tr>
+        <tr>
+          <td>衡量工具</td>
+          <td>相关系数 r、Spearman ρ 等</td>
+          <td>RCT、自然实验、DID、IV 等</td>
+        </tr>
+        <tr>
+          <td>数据来源</td>
+          <td>观测数据即可</td>
+          <td>通常需要实验设计或准实验</td>
+        </tr>
+        <tr>
+          <td>可预测未来？</td>
+          <td>是（统计预测）</td>
+          <td>是（且支持干预决策）</td>
+        </tr>
+        <tr>
+          <td>可指导干预？</td>
+          <td>危险——可能基于虚假相关行动</td>
+          <td>是——改变原因才能改变结果</td>
+        </tr>
+        <tr>
+          <td>最大风险</td>
+          <td>把相关误认为因果，作出错误政策</td>
+          <td>忽视机制，过度依赖单一实验</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- ── TAKEAWAY ── -->
+  <div class="takeaway">
+    <h3>核心记忆点</h3>
+    <p>
+      相关性告诉你"值得去看这里"，因果性才告诉你"该怎么做"。<br><br>
+      在做任何数据驱动的决策之前，先问自己：
+      <strong>这里有没有可能存在我没有考虑到的混淆变量？</strong>
+      如果有，先控制它，再下结论。
+    </p>
+  </div>
+
+</div>
+
+<div class="divider" style="max-width:900px;margin:0 auto"></div>
+<footer>
+  Built with HTML · Hosted on GitHub Pages · © 2026 Kevin
+</footer>
+
+</body>
+</html>
